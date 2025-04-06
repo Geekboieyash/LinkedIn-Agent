@@ -1,0 +1,28 @@
+/* Additional custom styles can be added here */
+.footer {
+    margin-top: 50px;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: #0a66c2;
+    margin-bottom: 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-header {
+        padding: 15px;
+    }
+    
+    .CodeMirror {
+        height: 200px;
+    }
+    
+    #result {
+        min-height: 200px;
+    }
+}
