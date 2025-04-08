@@ -72,6 +72,7 @@ Your app will be live at:
 
 Phase I is open-source — feel free to fork and build with it.  
 Later phases will be shared as they stabilize.
+Demo Video on youtube: https://youtu.be/TYZh1qEm1rk
 
 ---
 
