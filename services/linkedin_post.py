@@ -12,7 +12,7 @@ class LinkedInPostGenerator:
         
         # Prompt for the AI
         prompt = f"""
-        Create an engaging, professional LinkedIn post about the following Python code:
+        Create an engaging, professional LinkedIn post about the following code:
         ```
         {code}
         ```
