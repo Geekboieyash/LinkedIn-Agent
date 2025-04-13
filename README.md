@@ -83,3 +83,29 @@ MIT — free for personal + commercial use. Just don’t resell it without chang
 ---
 
 > ✍️ Built for devs, by a dev — to help you share your work without overthinking it.
+
+---
+## Project Structure
+
+```
+project_root/
+├── api/                       # New: FastAPI app core
+│   ├── main.py                # FastAPI app instance
+│   ├── routes/                # Moved from project root
+│   │   └── linkedin_routes.py
+│   ├── services/              # Moved from project root
+│   │   └── linkedin_post.py
+│   ├── schemas/               # New: Pydantic request/response models
+│   └── deps.py                # (Optional) for dependency injection
+│
+├── ai_core/                   # Renamed from models/
+│   └── gemini.py              # Gemini/LLM logic stays here
+│
+├── utils/                     # Keep as-is
+├── templates/                 # Keep if you're rendering HTML (optional)
+├── config.py                  # Keep for settings/env mgmt
+├── .env
+├── requirements.txt
+└── frontend/                  # Create new React app here
+
+```

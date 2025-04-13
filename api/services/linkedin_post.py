@@ -1,3 +1,11 @@
+
+
+def generate_post(topic: str) -> str:
+    # Temporary mock response
+    return f"🔥 Here's a powerful LinkedIn post about {topic}. Let's get some engagement!"
+
+
+
 class LinkedInPostGenerator:
     """Service for generating LinkedIn posts"""
     

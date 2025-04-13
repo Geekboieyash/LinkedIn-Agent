@@ -1,7 +1,7 @@
-from .linkedin_routes import register_linkedin_routes
+from .linkedin_routes import generate_linkedin_post
 
 def register_routes(app):
     """Register all application routes"""
-    register_linkedin_routes(app)
+    generate_linkedin_post(app)
 
 __all__ = ['register_routes']
