@@ -1,5 +1,6 @@
 # Environment variables
 .env
+.env.*
 
 # Python
 __pycache__/
@@ -7,10 +8,11 @@ __pycache__/
 *$py.class
 *.so
 .Python
-env/
+*.egg
+*.egg-info/
+dist/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -19,13 +21,40 @@ lib64/
 parts/
 sdist/
 var/
-*.egg-info/
 .installed.cfg
-*.egg
 
-# Virtual Environment
+# Virtual Environments
 venv/
 ENV/
+env/
+.venv/
+
+# FastAPI specific (if using Uvicorn logs or temp files)
+*.log
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.next/
+frontend/.cache/
+
+# Build artifacts
+*.log
+*.pot
+*.mo
+*.log
+*.bak
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+.Spotlight-V100
+.Trashes
+desktop.ini
 
 # IDE files
 .idea/
@@ -33,6 +62,17 @@ ENV/
 *.swp
 *.swo
 
-# OS specific files
-.DS_Store
-Thumbs.db
+# Testing & coverage
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+coverage.xml
+htmlcov/
+pytestdebug.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# TypeScript
+*.tsbuildinfo
