@@ -1,12 +1,13 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PostGenerator from './components/PostGenerator';
+import './index.css';
 
 const App = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f2f4f8]">
+    <div className="page-div">
       <Header />
-      <main className="flex-1 p-6">
+      <main className="content-div">
         <PostGenerator />
       </main>
       <Footer />

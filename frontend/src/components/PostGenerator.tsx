@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-
+import '../styles/PostGenerator.css'
 const PostGenerator: React.FC = () => {
   const [code, setCode] = useState('');
   const [generatedPost, setGeneratedPost] = useState('');
+
+  // Placeholder user info
+  const [userName] = useState('Your Name');
+  const [userTitle] = useState('Your Title');
+  const [userCompany] = useState('Your Company');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setCode(e.target.value);
   };
 
   const handleGeneratePost = () => {
-    // Placeholder logic – replace this with actual API call or logic
     const fakePost = `🚀 Just wrote this code snippet:
 
 \`\`\`ts
@@ -20,30 +24,43 @@ Loving how it turned out! 🔥 #DevLife #React #TypeScript`;
     setGeneratedPost(fakePost);
   };
 
-  return (
-    <div className="flex flex-col md:flex-row gap-6 w-full max-w-screen-xl mx-auto">
-      {/* Input Section */}
-      <div className="w-full md:w-1/2 bg-white shadow-md rounded-xl overflow-hidden p-4">
-        <h2 className="text-lg font-semibold bg-blue-700 text-white p-2 rounded">Input Your Code</h2>
-        <textarea
-          className="w-full h-64 mt-4 p-3 rounded bg-[#1e1e1e] text-gray-200 font-mono resize-none"
-          placeholder="Paste your code snippet here..."
-          value={code}
-          onChange={handleInputChange}
-        />
-        <button
-          onClick={handleGeneratePost}
-          className="mt-4 bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition"
-        >
-          Generate LinkedIn Post
-        </button>
-      </div>
+  const handleCopyToClipboard = () => {
+    if (generatedPost && navigator.clipboard) {
+      navigator.clipboard.writeText(generatedPost)
+        .then(() => alert('Copied to clipboard!'))
+        .catch(err => console.error('Failed to copy text: ', err));
+    }
+  };
 
-      {/* Output Section */}
-      <div className="w-full md:w-1/2 bg-white shadow-md rounded-xl overflow-hidden p-4">
-        <h2 className="text-lg font-semibold bg-blue-700 text-white p-2 rounded">Generated LinkedIn Post</h2>
-        <div className="mt-4 whitespace-pre-wrap text-gray-700 italic min-h-[16rem]">
-          {generatedPost || 'Your LinkedIn post will appear here...'}
+  return (
+    <div className="app-container">
+      <h1>LinkedIn Post Generator</h1>
+      <p>Transform your code into engaging LinkedIn posts using AI</p>
+
+      <div className="content">
+        <div className="input-container">
+          <h2>Input Your Code</h2>
+          <textarea
+            className="code-input"
+            placeholder="Paste your code snippet here..."
+            value={code}
+            onChange={handleInputChange}
+          />
+          <button onClick={handleGeneratePost} className="generate-button">
+            Generate LinkedIn Post
+          </button>
+        </div>
+
+        <div className="post-container">
+          <h2>Generated LinkedIn Post</h2>
+          <div className="post-preview">
+            <div className="font-bold">{userName}</div>
+            <div className="text-sm text-gray-600">{userTitle} • {userCompany}</div>
+            <div className="mt-2">{generatedPost || 'Your LinkedIn post will appear here...'}</div>
+          </div>
+          <button onClick={handleCopyToClipboard} className="copy-button">
+            Copy to Clipboard
+          </button>
         </div>
       </div>
     </div>

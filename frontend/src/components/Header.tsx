@@ -1,13 +1,21 @@
-const Header = () => {
-    return (
-      <header className="bg-blue-700 text-white p-6 shadow-md">
-        <h1 className="text-3xl font-bold mb-1">LinkedIn Post Generator</h1>
-        <p className="text-sm text-blue-100">
-          Transform your code into an engaging LinkedIn post using AI ✨
-        </p>
-      </header>
-    );
-  };
-  
-  export default Header;
-  
+import React from 'react';
+import '../styles/Header.css';
+
+const Header: React.FC = () => {
+  return (
+    <header className="header">
+      <div className="header-container">
+        <div className="header-title">LinkedIn Post Generator</div>
+        <nav>
+          <ul className="header-nav">
+            <li><a href="#" className="nav-link">Home</a></li>
+            <li><a href="#" className="nav-link">Features</a></li>
+            <li><a href="#" className="nav-link">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
+};
+
+export default Header;
