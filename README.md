@@ -1,6 +1,7 @@
 # 🤖 AI-Driven LinkedIn Post Generator
 
 > Effortless professional content from your daily workflow.
+
 ![image](https://github.com/user-attachments/assets/3342867f-b26f-46ef-b222-8bce638a57d4)
 
 ---
