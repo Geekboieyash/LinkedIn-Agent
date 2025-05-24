@@ -1,34 +1,32 @@
 import os
 from dotenv import load_dotenv
+from utils.logger import logger
 
 def load_env_variables():
-    """Load environment variables from .env file"""
+    """Load environment variables from .env file, or create a default one if not present."""
     if not os.path.exists('.env'):
-        print("Warning: .env file not found.")
-        print("Creating .env file with placeholder API key...")
+        logger.warning(".env file not found. Creating one with placeholder keys...")
         with open('.env', 'w') as f:
-            f.write('GOOGLE_API_KEY=your_api_key_here\n')
-        print("Please edit the .env file to add your Google API key.")
+            f.write("GEMINI_API_KEY=your_api_key_here\n")
+        logger.info("✅ .env file created. Please edit it and add your actual GEMINI_API_KEY.")
     
     load_dotenv()
+    logger.debug("✅ Environment variables loaded.")
 
-def validate_api_key():
-    """Validate and clean the API key"""
-    api_key = os.getenv("GOOGLE_API_KEY")
-    
-    # Handle common API key issues
+def validate_api_key(env_var_name: str) -> str | None:
+    """Validate and clean the API key from the environment"""
+    api_key = os.getenv(env_var_name)
     if not api_key or api_key == "your_api_key_here":
-        print("Error: Google API key not set in .env file.")
-        print("Please edit the .env file to add your Google API key.")
-        print("Example: GOOGLE_API_KEY=your_actual_api_key")
+        logger.error(f"{env_var_name} not set in .env file.")
+        logger.error(f"Please set it in your .env file like this:\n{env_var_name}=your_actual_api_key")
+        logger.debug("API Key Loaded: False")
+        return None
+
     
-    # Remove quotes if they exist (common mistake in .env files)
-    if api_key and api_key.startswith('"') and api_key.endswith('"'):
-        print("Warning: Removing quotes from API key in .env file.")
-        print("For future reference, your .env file should contain:")
-        print("GOOGLE_API_KEY=your_actual_api_key")
-        print("Not:")
-        print('GOOGLE_API_KEY="your_actual_api_key"')
-        api_key = api_key[1:-1]  # Remove first and last character (the quotes)
-    
+    if api_key.startswith('"') and api_key.endswith('"'):
+        logger.warning(f"⚠️ Quotes detected in {env_var_name}, removing them.")
+        logger.warning(f"✅ Use this instead: {env_var_name}=your_actual_api_key (no quotes)")
+        api_key = api_key[1:-1]
+
+    logger.debug(f"{env_var_name} Loaded Successfully")
     return api_key

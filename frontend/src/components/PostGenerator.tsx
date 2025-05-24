@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import '../styles/PostGenerator.css'
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+import remarkEmoji from 'remark-emoji';
+import '../styles/PostGenerator.css'; 
+
 const PostGenerator: React.FC = () => {
   const [code, setCode] = useState('');
   const [generatedPost, setGeneratedPost] = useState('');
@@ -13,15 +19,24 @@ const PostGenerator: React.FC = () => {
     setCode(e.target.value);
   };
 
-  const handleGeneratePost = () => {
-    const fakePost = `🚀 Just wrote this code snippet:
+  const handleGeneratePost = async () => {
+    try {
+      const response = await fetch('/api/linkedin/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic: code }),
+      });
 
-\`\`\`ts
-${code}
-\`\`\`
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
 
-Loving how it turned out! 🔥 #DevLife #React #TypeScript`;
-    setGeneratedPost(fakePost);
+      const data = await response.json();
+      setGeneratedPost(data.content);
+    } catch (error) {
+      console.error('Failed to generate post:', error);
+      alert('Failed to generate post. Please try again.');
+    }
   };
 
   const handleCopyToClipboard = () => {
@@ -56,7 +71,32 @@ Loving how it turned out! 🔥 #DevLife #React #TypeScript`;
           <div className="post-preview">
             <div className="font-bold">{userName}</div>
             <div className="text-sm text-gray-600">{userTitle} • {userCompany}</div>
-            <div className="mt-2">{generatedPost || 'Your LinkedIn post will appear here...'}</div>
+            <div className="mt-2">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm, remarkEmoji]}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={tomorrow}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  }
+                }}
+              >
+                {generatedPost || 'Your LinkedIn post will appear here...'}
+              </ReactMarkdown>
+            </div>
           </div>
           <button onClick={handleCopyToClipboard} className="copy-button">
             Copy to Clipboard
